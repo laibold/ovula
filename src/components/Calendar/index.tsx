@@ -1,10 +1,16 @@
 import "@toast-ui/calendar/dist/toastui-calendar.min.css";
-// import { default as TuiCalendar } from "@toast-ui/react-calendar";
 import TUICalendar from "@toast-ui/react-calendar";
 import ToastUIReactCalendar from "@toast-ui/react-calendar";
 
 import styled from "styled-components";
 import { useCallback, useEffect, useRef, useState } from "react";
+import {
+  ButtonWrapper,
+  CalendarHeadline,
+  ConfigWrapper,
+  DateSelectButton,
+} from "./styles";
+import { FaAngleLeft, FaAngleRight, FaCircle } from "react-icons/fa";
 
 const CalendarWrapper = styled.div`
   cursor: default;
@@ -39,20 +45,36 @@ export const Calendar = () => {
     );
   }, []);
 
+  const setToday = useCallback(() => {
+    setSelectedDate(new Date());
+  }, []);
+
   useEffect(() => {
     calRef.current?.calendarInstance?.setDate(selectedDate);
   }, [selectedDate]);
 
   return (
     <CalendarWrapper>
-      <button onClick={onPrev}>Prev</button>
-      <button onClick={onNext}>Next</button>
-      <span>
-        {selectedDate.toLocaleDateString("de-DE", {
-          month: "long",
-          year: "numeric",
-        })}
-      </span>
+      <ConfigWrapper>
+        <CalendarHeadline>
+          {selectedDate.toLocaleDateString("de-DE", {
+            month: "long",
+            year: "numeric",
+          })}
+        </CalendarHeadline>
+        <ButtonWrapper>
+          <DateSelectButton onClick={onPrev}>
+            <FaAngleLeft color="white" />
+          </DateSelectButton>
+          <DateSelectButton onClick={setToday}>
+            <FaCircle color="white" />
+          </DateSelectButton>
+          <DateSelectButton onClick={onNext}>
+            <FaAngleRight color="white" />
+          </DateSelectButton>
+        </ButtonWrapper>
+      </ConfigWrapper>
+
       <TUICalendar
         ref={calRef}
         usageStatistics={false}
@@ -60,6 +82,7 @@ export const Calendar = () => {
         month={monthOptions}
         isReadOnly={true}
         theme={themeConfig}
+        height={"500px"}
       />
     </CalendarWrapper>
   );
