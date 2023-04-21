@@ -1,20 +1,20 @@
 import "@toast-ui/calendar/dist/toastui-calendar.min.css";
 import TUICalendar from "@toast-ui/react-calendar";
 import ToastUIReactCalendar from "@toast-ui/react-calendar";
-
-import styled from "styled-components";
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
   ButtonWrapper,
   CalendarHeadline,
+  CalendarWrapper,
   ConfigWrapper,
   DateSelectButton,
 } from "./styles";
 import { FaAngleLeft, FaAngleRight, FaCircle } from "react-icons/fa";
+import { EventObject } from "@toast-ui/calendar/types";
 
-const CalendarWrapper = styled.div`
-  cursor: default;
-`;
+type Props = {
+  events: EventObject[];
+};
 
 const monthOptions = {
   startDayOfWeek: 1,
@@ -28,7 +28,7 @@ const themeConfig = {
   },
 };
 
-export const Calendar = () => {
+export const Calendar = ({ events }: Props) => {
   const [selectedDate, setSelectedDate] = useState(new Date());
 
   const calRef = useRef<ToastUIReactCalendar>(null);
@@ -80,10 +80,12 @@ export const Calendar = () => {
         usageStatistics={false}
         view={"month"}
         month={monthOptions}
-        isReadOnly={true}
+        // isReadOnly={true}
         theme={themeConfig}
         height={"500px"}
+        events={events}
       />
+      {/* todo bind event handlers */}
     </CalendarWrapper>
   );
 };

@@ -1,5 +1,9 @@
 import styled from "styled-components";
 
+export const CalendarWrapper = styled.div`
+  cursor: default;
+`;
+
 export const ConfigWrapper = styled.div`
   display: flex;
   justify-content: space-between;
