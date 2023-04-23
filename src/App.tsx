@@ -1,6 +1,6 @@
 import "@toast-ui/calendar/dist/toastui-calendar.min.css";
 import { Calendar } from "./components/Calendar";
-import { GlobalStyle } from "./components/theme/GlobalStyle";
+import { GlobalStyle } from "./components/Theme/GlobalStyle";
 import "@picocss/pico";
 import styled from "styled-components";
 import { EventObject } from "@toast-ui/calendar/types";

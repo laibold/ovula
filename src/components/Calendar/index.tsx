@@ -2,15 +2,9 @@ import "@toast-ui/calendar/dist/toastui-calendar.min.css";
 import TUICalendar from "@toast-ui/react-calendar";
 import ToastUIReactCalendar from "@toast-ui/react-calendar";
 import { useCallback, useEffect, useRef, useState } from "react";
-import {
-  ButtonWrapper,
-  CalendarHeadline,
-  CalendarWrapper,
-  ConfigWrapper,
-  DateSelectButton,
-} from "./styles";
-import { FaAngleLeft, FaAngleRight, FaCircle } from "react-icons/fa";
+import { CalendarWrapper } from "./styles";
 import { EventObject } from "@toast-ui/calendar/types";
+import { CalendarConfig } from "./CalendarConfig";
 
 type Props = {
   events: EventObject[];
@@ -45,8 +39,20 @@ export const Calendar = ({ events }: Props) => {
     );
   }, []);
 
-  const setToday = useCallback(() => {
+  const onSetToday = useCallback(() => {
     setSelectedDate(new Date());
+
+    const a = document.evaluate(
+      "//span[contains(text(),'18')]/../../..",
+      document,
+      null,
+      XPathResult.FIRST_ORDERED_NODE_TYPE,
+      null
+    ).singleNodeValue as HTMLDivElement;
+
+    if (a) {
+      a.style.backgroundColor = "rgba(62,231,215,0.7)";
+    }
   }, []);
 
   useEffect(() => {
@@ -55,26 +61,12 @@ export const Calendar = ({ events }: Props) => {
 
   return (
     <CalendarWrapper>
-      <ConfigWrapper>
-        <CalendarHeadline>
-          {selectedDate.toLocaleDateString("de-DE", {
-            month: "long",
-            year: "numeric",
-          })}
-        </CalendarHeadline>
-        <ButtonWrapper>
-          <DateSelectButton onClick={onPrev}>
-            <FaAngleLeft color="white" />
-          </DateSelectButton>
-          <DateSelectButton onClick={setToday}>
-            <FaCircle color="white" />
-          </DateSelectButton>
-          <DateSelectButton onClick={onNext}>
-            <FaAngleRight color="white" />
-          </DateSelectButton>
-        </ButtonWrapper>
-      </ConfigWrapper>
-
+      <CalendarConfig
+        selectedDate={selectedDate}
+        onPrev={onPrev}
+        onSetToday={onSetToday}
+        onNext={onNext}
+      />
       <TUICalendar
         ref={calRef}
         usageStatistics={false}
