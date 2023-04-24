@@ -1,5 +1,6 @@
 import { FormEvent } from "react";
 import { CycleInformation } from "../../types/types";
+import { ApplyButton, CheckboxWrapper, Wrapper } from "./styles";
 
 type Props = {
   onSubmit: ({
@@ -44,35 +45,44 @@ export const Inputs = ({ onSubmit }: Props) => {
   };
 
   return (
-    <form onSubmit={onFormSubmit}>
-      <label htmlFor={"periodStart"}>Beginn deiner Periode</label>
-      <input
-        id={"periodStart"}
-        type={"date"}
-        defaultValue={new Date().toLocaleDateString("en-CA")}
-      />
-      <label htmlFor={"menstruationLength"}>Dauer deiner Menstruation</label>
-      <input
-        id={"menstruationLength"}
-        type={"number"}
-        min={"1"}
-        defaultValue={"4"}
-      />
-      <label htmlFor={"cycleLength"}>Dauer deines Zyklus</label>
-      <input id={"cycleLength"} type={"number"} min={"1"} defaultValue={"28"} />
-      <label htmlFor={"sportDays"}>Deine Sporttage</label>
-      {[0, 1, 2, 3, 4, 5, 6].map((value) => (
-        <>
-          <input
-            id={value.toString()}
-            type={"checkbox"}
-            name={"sportDays"}
-            key={value}
-          />
-          <label htmlFor={value.toString()}>{weekdayByIndex[value]}</label>
-        </>
-      ))}
-      <button>ok</button>
-    </form>
+    <Wrapper>
+      <form onSubmit={onFormSubmit}>
+        <label htmlFor={"periodStart"}>Beginn deiner Periode</label>
+        <input
+          id={"periodStart"}
+          type={"date"}
+          defaultValue={new Date().toLocaleDateString("en-CA")}
+        />
+        <label htmlFor={"menstruationLength"}>Dauer deiner Menstruation</label>
+        <input
+          id={"menstruationLength"}
+          type={"number"}
+          min={"1"}
+          defaultValue={"4"}
+        />
+        <label htmlFor={"cycleLength"}>Dauer deines Zyklus</label>
+        <input
+          id={"cycleLength"}
+          type={"number"}
+          min={"1"}
+          defaultValue={"28"}
+        />
+        <label htmlFor={"sportDays"}>Deine Sporttage</label>
+        <CheckboxWrapper>
+          {[0, 1, 2, 3, 4, 5, 6].map((value) => (
+            <span key={value}>
+              <input
+                id={value.toString()}
+                type={"checkbox"}
+                name={"sportDays"}
+                key={value}
+              />
+              <label htmlFor={value.toString()}>{weekdayByIndex[value]}</label>
+            </span>
+          ))}
+        </CheckboxWrapper>
+        <ApplyButton>Plan generieren</ApplyButton>
+      </form>
+    </Wrapper>
   );
 };

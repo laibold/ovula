@@ -10,7 +10,7 @@ import { CycleInformation } from "./types/types";
 
 const Headline = styled.h1`
   text-align: center;
-  margin-top: 10px;
+  margin: 10px 0 30px;
   color: var(--primary);
 `;
 
