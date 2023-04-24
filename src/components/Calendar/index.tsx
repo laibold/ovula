@@ -1,11 +1,11 @@
 import "@toast-ui/calendar/dist/toastui-calendar.min.css";
-import TUICalendar from "@toast-ui/react-calendar";
 import ToastUIReactCalendar from "@toast-ui/react-calendar";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { CalendarWrapper } from "./styles";
+import { CalendarWrapper, NavLinkStyled, TUICalendarStyled } from "./styles";
 import { EventObject } from "@toast-ui/calendar/types";
 import { CalendarConfig } from "./CalendarConfig";
 import { CycleInformation } from "../../types/types";
+import { FaAngleLeft } from "react-icons/fa";
 
 type Props = {
   events: EventObject[];
@@ -52,13 +52,17 @@ export const Calendar = ({ events, cycleInformation }: Props) => {
 
   return (
     <CalendarWrapper>
+      <NavLinkStyled to="/">
+        <FaAngleLeft />
+        Zurück
+      </NavLinkStyled>
       <CalendarConfig
         selectedDate={selectedDate}
         onPrev={onPrev}
         onSetToday={onSetToday}
         onNext={onNext}
       />
-      <TUICalendar
+      <TUICalendarStyled
         ref={calRef}
         usageStatistics={false}
         view={"month"}

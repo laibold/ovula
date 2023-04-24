@@ -7,6 +7,7 @@ import { EventObject } from "@toast-ui/calendar/types";
 import { Inputs } from "./components/Inputs";
 import { useState } from "react";
 import { CycleInformation } from "./types/types";
+import { Route, Routes } from "react-router-dom";
 
 const Headline = styled.h1`
   text-align: center;
@@ -36,8 +37,15 @@ export const App = () => {
     <>
       <GlobalStyle />
       <Headline>ovula</Headline>
-      <Inputs onSubmit={setCycleInformation} />
-      <Calendar events={events} cycleInformation={cycleInformation} />
+      <Routes>
+        <Route path="/" element={<Inputs onSubmit={setCycleInformation} />} />
+        <Route
+          path="/calendar"
+          element={
+            <Calendar events={events} cycleInformation={cycleInformation} />
+          }
+        />
+      </Routes>
     </>
   );
 };
