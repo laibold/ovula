@@ -9,9 +9,26 @@ type Props = {
   }: CycleInformation) => void;
 };
 
+const weekdayByIndex: Record<number, string> = {
+  0: "Mo",
+  1: "Di",
+  2: "Mi",
+  3: "Do",
+  4: "Fr",
+  5: "Sa",
+  6: "So",
+};
+
 export const Inputs = ({ onSubmit }: Props) => {
   const onFormSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    const selectedSportDays: number[] = [];
+    e.currentTarget.sportDays.forEach((v: { id: number; checked: boolean }) => {
+      if (v.checked) {
+        selectedSportDays.push(v.id);
+      }
+    });
 
     const target = e.currentTarget;
 
@@ -19,6 +36,7 @@ export const Inputs = ({ onSubmit }: Props) => {
       periodStart: new Date(target.periodStart.value),
       menstruationLength: target.menstruationLength.value,
       cycleLength: target.cycleLength.value,
+      sportDays: selectedSportDays,
     };
 
     // todo error handling
@@ -42,6 +60,18 @@ export const Inputs = ({ onSubmit }: Props) => {
       />
       <label htmlFor={"cycleLength"}>Dauer deines Zyklus</label>
       <input id={"cycleLength"} type={"number"} min={"1"} defaultValue={"28"} />
+      <label htmlFor={"sportDays"}>Deine Sporttage</label>
+      {[0, 1, 2, 3, 4, 5, 6].map((value) => (
+        <>
+          <input
+            id={value.toString()}
+            type={"checkbox"}
+            name={"sportDays"}
+            key={value}
+          />
+          <label htmlFor={value.toString()}>{weekdayByIndex[value]}</label>
+        </>
+      ))}
       <button>ok</button>
     </form>
   );
