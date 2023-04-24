@@ -11,6 +11,7 @@ import { CycleInformation } from "./types/types";
 const Headline = styled.h1`
   text-align: center;
   margin-top: 10px;
+  color: var(--primary);
 `;
 
 const events: EventObject[] = [
