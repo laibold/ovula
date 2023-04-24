@@ -1,13 +1,13 @@
 import "@toast-ui/calendar/dist/toastui-calendar.min.css";
-import { Calendar } from "./components/Calendar";
+import { Calendar } from "./pages/Calendar";
 import { GlobalStyle } from "./components/Theme/GlobalStyle";
 import "@picocss/pico";
 import styled from "styled-components";
 import { EventObject } from "@toast-ui/calendar/types";
-import { Inputs } from "./components/Inputs";
+import { Inputs } from "./pages/Inputs";
+import { Route, Routes } from "react-router-dom";
 import { useState } from "react";
 import { CycleInformation } from "./types/types";
-import { Route, Routes } from "react-router-dom";
 
 const Headline = styled.h1`
   text-align: center;
@@ -38,7 +38,15 @@ export const App = () => {
       <GlobalStyle />
       <Headline>ovula</Headline>
       <Routes>
-        <Route path="/" element={<Inputs onSubmit={setCycleInformation} />} />
+        <Route
+          path="/"
+          element={
+            <Inputs
+              cycleInformation={cycleInformation}
+              onSubmit={setCycleInformation}
+            />
+          }
+        />
         <Route
           path="/calendar"
           element={

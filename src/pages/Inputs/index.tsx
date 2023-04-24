@@ -4,6 +4,7 @@ import { ApplyButton, CheckboxWrapper, Wrapper } from "./styles";
 import { useNavigate } from "react-router-dom";
 
 type Props = {
+  cycleInformation: CycleInformation | null;
   onSubmit: ({
     periodStart,
     menstruationLength,
@@ -21,16 +22,16 @@ const weekdayByIndex: Record<number, string> = {
   6: "So",
 };
 
-export const Inputs = ({ onSubmit }: Props) => {
+export const Inputs = ({ onSubmit, cycleInformation }: Props) => {
   const navigate = useNavigate();
 
   const onFormSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const selectedSportDays: number[] = [];
-    e.currentTarget.sportDays.forEach((v: { id: number; checked: boolean }) => {
+    e.currentTarget.sportDays.forEach((v: { id: string; checked: boolean }) => {
       if (v.checked) {
-        selectedSportDays.push(v.id);
+        selectedSportDays.push(parseInt(v.id));
       }
     });
 
@@ -45,7 +46,7 @@ export const Inputs = ({ onSubmit }: Props) => {
 
     // todo error handling
     onSubmit(data);
-    navigate("/calendar");
+    navigate("/calendar", { state: data });
   };
 
   return (
@@ -61,21 +62,24 @@ export const Inputs = ({ onSubmit }: Props) => {
         <input
           id={"periodStart"}
           type={"date"}
-          defaultValue={new Date().toLocaleDateString("en-CA")}
+          defaultValue={
+            cycleInformation?.periodStart.toLocaleDateString("en-CA") ||
+            new Date().toLocaleDateString("en-CA")
+          }
         />
         <label htmlFor={"menstruationLength"}>Dauer deiner Menstruation</label>
         <input
           id={"menstruationLength"}
           type={"number"}
           min={"1"}
-          defaultValue={"4"}
+          defaultValue={cycleInformation?.menstruationLength || "4"}
         />
         <label htmlFor={"cycleLength"}>Dauer deines Zyklus</label>
         <input
           id={"cycleLength"}
           type={"number"}
           min={"1"}
-          defaultValue={"28"}
+          defaultValue={cycleInformation?.cycleLength || "28"}
         />
         <label htmlFor={"sportDays"}>Deine Sporttage</label>
         <CheckboxWrapper>
@@ -86,6 +90,7 @@ export const Inputs = ({ onSubmit }: Props) => {
                 type={"checkbox"}
                 name={"sportDays"}
                 key={value}
+                defaultChecked={cycleInformation?.sportDays.includes(value)}
               />
               <label htmlFor={value.toString()}>{weekdayByIndex[value]}</label>
             </span>
