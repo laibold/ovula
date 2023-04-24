@@ -5,9 +5,11 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { CalendarWrapper } from "./styles";
 import { EventObject } from "@toast-ui/calendar/types";
 import { CalendarConfig } from "./CalendarConfig";
+import { CycleInformation } from "../../types/types";
 
 type Props = {
   events: EventObject[];
+  cycleInformation: CycleInformation | null;
 };
 
 const monthOptions = {
@@ -22,7 +24,7 @@ const themeConfig = {
   },
 };
 
-export const Calendar = ({ events }: Props) => {
+export const Calendar = ({ events, cycleInformation }: Props) => {
   const [selectedDate, setSelectedDate] = useState(new Date());
 
   const calRef = useRef<ToastUIReactCalendar>(null);
@@ -41,20 +43,9 @@ export const Calendar = ({ events }: Props) => {
 
   const onSetToday = useCallback(() => {
     setSelectedDate(new Date());
-
-    const a = document.evaluate(
-      "//span[contains(text(),'18')]/../../..",
-      document,
-      null,
-      XPathResult.FIRST_ORDERED_NODE_TYPE,
-      null
-    ).singleNodeValue as HTMLDivElement;
-
-    if (a) {
-      a.style.backgroundColor = "rgba(62,231,215,0.7)";
-    }
   }, []);
 
+  // set Month based on selected date (from control buttons)
   useEffect(() => {
     calRef.current?.calendarInstance?.setDate(selectedDate);
   }, [selectedDate]);
@@ -77,7 +68,7 @@ export const Calendar = ({ events }: Props) => {
         height={"500px"}
         events={events}
       />
-      {/* todo bind event handlers */}
+      {/* todo bind event handlers (eg clickEvent) */}
     </CalendarWrapper>
   );
 };

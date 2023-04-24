@@ -4,6 +4,9 @@ import { GlobalStyle } from "./components/Theme/GlobalStyle";
 import "@picocss/pico";
 import styled from "styled-components";
 import { EventObject } from "@toast-ui/calendar/types";
+import { Inputs } from "./components/Inputs";
+import { useState } from "react";
+import { CycleInformation } from "./types/types";
 
 const Headline = styled.h1`
   text-align: center;
@@ -24,14 +27,16 @@ const events: EventObject[] = [
   },
 ];
 
-function App() {
+export const App = () => {
+  const [cycleInformation, setCycleInformation] =
+    useState<CycleInformation | null>(null);
+
   return (
     <>
       <GlobalStyle />
       <Headline>ovula</Headline>
-      <Calendar events={events} />
+      <Inputs onSubmit={setCycleInformation} />
+      <Calendar events={events} cycleInformation={cycleInformation} />
     </>
   );
-}
-
-export default App;
+};
