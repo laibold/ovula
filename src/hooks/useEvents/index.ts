@@ -48,28 +48,32 @@ export const useEvents = ({
         "Menstruation",
         menstruationPhase.start,
         menstruationPhase.duration,
-        "#c95151"
+        "#c95151",
+        "Phase 1"
       ),
       ...getSportEventsForPhase(menstruationPhase, sportDays),
       createEvent(
         "Follikelphase",
         follicularPhase.start,
         follicularPhase.duration,
-        "#dad859"
+        "#dad859",
+        "Phase 2"
       ),
       ...getSportEventsForPhase(follicularPhase, sportDays),
       createEvent(
         "Ovulation",
         ovaluationPhase.start,
         ovaluationPhase.duration,
-        "#6fc951"
+        "#6fc951",
+        "Phase 3"
       ),
       ...getSportEventsForPhase(ovaluationPhase, sportDays),
       createEvent(
         "Lutealphase",
         lutealPhase.start,
         lutealPhase.duration,
-        "#be439a"
+        "#be439a",
+        "Phase 4"
       ),
       ...getSportEventsForPhase(lutealPhase, sportDays),
     ];
@@ -95,7 +99,15 @@ const getSportEventsForPhase = (phase: Phase, sportDays: number[]) => {
     const date = getDateFromDuration(phase.start, i);
     if (sportDays.includes(date.getDay() - 1)) {
       // todo get sport type
-      events.push(createEvent("Sport", date, 0, "#ff6100"));
+      events.push(
+        createEvent(
+          "Sport",
+          date,
+          0,
+          "#ff6100",
+          "An diesem Tag machst du Sport!"
+        )
+      );
     }
   }
 
@@ -106,14 +118,15 @@ const createEvent = (
   name: string,
   startDate: Date,
   duration: number,
-  color: string
+  color: string,
+  description: string
 ): EventObject => ({
   calendarId: "1",
   category: "allday",
   isVisible: true,
   title: name,
   id: `${name.replaceAll(" ", "")}-${startDate.getTime()}`,
-  body: "Test",
+  body: description,
   start: startDate,
   end: getDateFromDuration(startDate, duration),
   borderColor: "transparent",

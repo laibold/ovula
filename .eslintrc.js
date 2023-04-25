@@ -23,7 +23,7 @@ module.exports = {
   },
   plugins: ["react", "@typescript-eslint"],
   rules: {
-    "prettier/prettier": "warn",
+    "prettier/prettier": "off",
     "react/jsx-curly-brace-presence": [
       "warn",
       { props: "never", children: "never" },

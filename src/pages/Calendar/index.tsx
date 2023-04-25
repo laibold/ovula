@@ -80,13 +80,15 @@ export const Calendar = ({ events }: Props) => {
         usageStatistics={false}
         view="month"
         month={monthOptions}
-        // isReadOnly={true}
+        isReadOnly={true}
         theme={themeConfig}
         height="550px"
         events={events}
         timezone={timezoneOptions}
+        useDetailPopup={true}
+        useFormPopup={false}
+        gridSelection={false}
       />
-      {/* todo bind event handlers (eg clickEvent) */}
     </CalendarWrapper>
   );
 };

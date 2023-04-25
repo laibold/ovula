@@ -14,6 +14,7 @@ export const GlobalStyle = createGlobalStyle`
     font-size: 2.5rem;
   }
 
+  // fix padding for week day names
   .toastui-calendar-day-names.toastui-calendar-month {
     padding: 0 !important;
   }
@@ -21,5 +22,27 @@ export const GlobalStyle = createGlobalStyle`
   .toastui-calendar-day-name-item {
     padding-left: 5px !important;
     font-weight: bold;
+  }
+  
+  // customize toast ui popup
+
+  // hide buttons
+  .toastui-calendar-popup-section.toastui-calendar-section-button {
+    display: none;
+  }
+
+  // hide date
+  .toastui-calendar-section-header > .toastui-calendar-content {
+    display: none;
+  }
+
+  // hide persons item
+  .toastui-calendar-popup-section > .toastui-calendar-detail-item-indent {
+    display: none;
+  }
+
+  // hide status item
+  .toastui-calendar-popup-section > div[class=toastui-calendar-detail-item] {
+    display: none;
   }
 `;
