@@ -59,21 +59,26 @@ export const Inputs = ({ onSubmit, cycleInformation }: Props) => {
         voluptua. At vero eos et accusam et justo duo dolores et ea rebum.{" "}
       </p>
 
-      {/*todo use <label><Field/>{Text}</label>*/}
       <Formik initialValues={initialValues} onSubmit={onFormSubmit}>
         <Form>
-          <label htmlFor="periodStart">Beginn deiner Periode</label>
-          <Field id="periodStart" name="periodStart" type="date" />
-          <label htmlFor="menstruationLength">Dauer deiner Menstruation</label>
-          <Field
-            id="menstruationLength"
-            name="menstruationLength"
-            type="number"
-            min="1"
-          />
-          <label htmlFor="cycleLength">Dauer deines Zyklus</label>
-          <Field id="cycleLength" name="cycleLength" type="number" min="1" />
-          <label htmlFor="sportDays">Deine Sporttage</label>
+          <label>
+            Beginn deiner Periode
+            <Field id="periodStart" name="periodStart" type="date" />
+          </label>
+          <label>
+            Dauer deiner Menstruation
+            <Field
+              id="menstruationLength"
+              name="menstruationLength"
+              type="number"
+              min="1"
+            />
+          </label>
+          <label>
+            Dauer deines Zyklus
+            <Field id="cycleLength" name="cycleLength" type="number" min="1" />
+          </label>
+          <label>Deine Sporttage</label>
           <CheckboxWrapper role="group">
             {[0, 1, 2, 3, 4, 5, 6].map((value) => (
               <label key={value}>
