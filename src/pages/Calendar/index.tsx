@@ -4,18 +4,17 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { CalendarWrapper, NavLinkStyled, TUICalendarStyled } from "./styles";
 import { EventObject } from "@toast-ui/calendar/types";
 import { CalendarConfig } from "./CalendarConfig";
-import { CycleInformation } from "../../types/types";
 import { FaAngleLeft } from "react-icons/fa";
 import { MonthOptions, ThemeObject } from "../../types/lib/TUICalendar";
 
 type Props = {
   events: EventObject[];
-  cycleInformation: CycleInformation | null;
 };
 
 const monthOptions: MonthOptions = {
   startDayOfWeek: 1,
   dayNames: ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"],
+  visibleEventCount: 3,
 };
 
 const themeConfig: ThemeObject = {
@@ -26,26 +25,38 @@ const themeConfig: ThemeObject = {
   },
 };
 
-export const Calendar = ({ events, cycleInformation }: Props) => {
+const timezoneOptions = {
+  zones: [
+    {
+      timezoneName: "Europe/Berlin",
+    },
+  ],
+};
+
+export const Calendar = ({ events }: Props) => {
   const [selectedDate, setSelectedDate] = useState(new Date());
 
   const calRef = useRef<ToastUIReactCalendar>(null);
 
   const onPrev = useCallback(() => {
-    setSelectedDate(
-      (current) => new Date(current.setMonth(current.getMonth() - 1))
-    );
-  }, []);
+    setSelectedDate((current) => {
+      const date = new Date();
+      date.setMonth(current.getMonth() - 1);
+      return date;
+    });
+  }, [setSelectedDate]);
 
   const onNext = useCallback(() => {
-    setSelectedDate(
-      (current) => new Date(current.setMonth(current.getMonth() + 1))
-    );
-  }, []);
+    setSelectedDate((current) => {
+      const date = new Date();
+      date.setMonth(current.getMonth() + 1);
+      return date;
+    });
+  }, [setSelectedDate]);
 
   const onSetToday = useCallback(() => {
     setSelectedDate(new Date());
-  }, []);
+  }, [setSelectedDate]);
 
   // set Month based on selected date (from control buttons)
   useEffect(() => {
@@ -71,8 +82,9 @@ export const Calendar = ({ events, cycleInformation }: Props) => {
         month={monthOptions}
         // isReadOnly={true}
         theme={themeConfig}
-        height="500px"
+        height="700px"
         events={events}
+        timezone={timezoneOptions}
       />
       {/* todo bind event handlers (eg clickEvent) */}
     </CalendarWrapper>

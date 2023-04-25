@@ -25,7 +25,7 @@ module.exports = {
   rules: {
     "prettier/prettier": "warn",
     "react/jsx-curly-brace-presence": [
-      "error",
+      "warn",
       { props: "never", children: "never" },
     ],
   },

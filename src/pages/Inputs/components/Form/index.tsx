@@ -18,8 +18,9 @@ type FormProps = {
   }: CycleInformation) => void;
 };
 
-type FormValues = Omit<CycleInformation, "periodStart"> & {
+type FormValues = Omit<CycleInformation, "periodStart" | "sportDays"> & {
   periodStart: string;
+  sportDays: string[];
 };
 
 const weekdayByIndex: Record<number, string> = {
@@ -106,8 +107,9 @@ const FormikInputsForm = ({ touched, errors }: FormikProps<FormValues>) => {
 };
 
 export const InputsForm = withFormik<FormProps, FormValues>({
-  mapPropsToValues: ({ cycleInformation }: FormProps) => ({
+  mapPropsToValues: ({ cycleInformation }: FormProps): FormValues => ({
     ...cycleInformation,
+    sportDays: cycleInformation.sportDays.map((value) => value.toString()),
     periodStart:
       cycleInformation?.periodStart.toLocaleDateString("en-CA") ||
       new Date().toLocaleDateString("en-CA"),
@@ -138,6 +140,7 @@ export const InputsForm = withFormik<FormProps, FormValues>({
   ) => {
     const data: CycleInformation = {
       ...values,
+      sportDays: values.sportDays.map((value) => parseInt(value)),
       periodStart: new Date(values.periodStart),
     };
 
