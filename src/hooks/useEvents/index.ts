@@ -91,7 +91,7 @@ const getDateFromDuration = (startDate: Date, duration: number) => {
 const getSportEventsForPhase = (phase: Phase, sportDays: number[]) => {
   const events: EventObject[] = [];
 
-  for (let i = 0; i < phase.duration; i++) {
+  for (let i = 0; i <= phase.duration; i++) {
     const date = getDateFromDuration(phase.start, i);
     if (sportDays.includes(date.getDay() - 1)) {
       // todo get sport type
