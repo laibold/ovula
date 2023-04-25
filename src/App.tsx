@@ -29,9 +29,17 @@ const events: EventObject[] = [
   },
 ];
 
+const defaultCycleInformation: CycleInformation = {
+  periodStart: new Date(),
+  menstruationLength: 4,
+  cycleLength: 28,
+  sportDays: [],
+};
+
 export const App = () => {
-  const [cycleInformation, setCycleInformation] =
-    useState<CycleInformation | null>(null);
+  const [cycleInformation, setCycleInformation] = useState<CycleInformation>(
+    defaultCycleInformation
+  );
 
   return (
     <>

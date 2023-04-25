@@ -22,5 +22,11 @@ module.exports = {
     project: ["./tsconfig.json"],
   },
   plugins: ["react", "@typescript-eslint"],
-  rules: {},
+  rules: {
+    "prettier/prettier": "warn",
+    "react/jsx-curly-brace-presence": [
+      "error",
+      { props: "never", children: "never" },
+    ],
+  },
 };
