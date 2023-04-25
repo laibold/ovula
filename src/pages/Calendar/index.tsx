@@ -6,17 +6,19 @@ import { EventObject } from "@toast-ui/calendar/types";
 import { CalendarConfig } from "./CalendarConfig";
 import { CycleInformation } from "../../types/types";
 import { FaAngleLeft } from "react-icons/fa";
+import { MonthOptions, ThemeObject } from "../../types/lib/TUICalendar";
 
 type Props = {
   events: EventObject[];
   cycleInformation: CycleInformation | null;
 };
 
-const monthOptions = {
+const monthOptions: MonthOptions = {
   startDayOfWeek: 1,
+  dayNames: ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"],
 };
 
-const themeConfig = {
+const themeConfig: ThemeObject = {
   common: {
     holiday: {
       color: "#000000",
@@ -65,11 +67,11 @@ export const Calendar = ({ events, cycleInformation }: Props) => {
       <TUICalendarStyled
         ref={calRef}
         usageStatistics={false}
-        view={"month"}
+        view="month"
         month={monthOptions}
         // isReadOnly={true}
         theme={themeConfig}
-        height={"500px"}
+        height="500px"
         events={events}
       />
       {/* todo bind event handlers (eg clickEvent) */}
