@@ -1,14 +1,9 @@
 import { CycleInformation } from "../../types/types";
-import { ApplyButton, CheckboxWrapper, Wrapper } from "./styles";
+import { Wrapper } from "./styles";
+import { InputsForm } from "./components/Form";
 import { useNavigate } from "react-router-dom";
-import { Field, Form, Formik } from "formik";
-import { useCallback, useMemo } from "react";
 
-type FormCycleInformation = Omit<CycleInformation, "periodStart"> & {
-  periodStart: string;
-};
-
-type Props = {
+export type InputsProps = {
   cycleInformation: CycleInformation;
   onSubmit: ({
     periodStart,
@@ -17,39 +12,13 @@ type Props = {
   }: CycleInformation) => void;
 };
 
-const weekdayByIndex: Record<number, string> = {
-  0: "Mo",
-  1: "Di",
-  2: "Mi",
-  3: "Do",
-  4: "Fr",
-  5: "Sa",
-  6: "So",
-};
+export const Inputs = ({ cycleInformation, onSubmit }: InputsProps) => {
+  const navigation = useNavigate();
 
-export const Inputs = ({ onSubmit, cycleInformation }: Props) => {
-  const navigate = useNavigate();
-
-  const onFormSubmit = useCallback((values: FormCycleInformation) => {
-    const data: CycleInformation = {
-      ...values,
-      periodStart: new Date(values.periodStart),
-    };
-
-    // todo error handling
-    onSubmit(data);
-    navigate("/calendar", { state: data });
-  }, []);
-
-  const initialValues: FormCycleInformation = useMemo(
-    () => ({
-      ...cycleInformation,
-      periodStart:
-        cycleInformation?.periodStart.toLocaleDateString("en-CA") ||
-        new Date().toLocaleDateString("en-CA"),
-    }),
-    [cycleInformation]
-  );
+  const onFormSubmit = (cycleInformation: CycleInformation) => {
+    onSubmit(cycleInformation);
+    navigation("/calendar");
+  };
 
   return (
     <Wrapper>
@@ -59,43 +28,7 @@ export const Inputs = ({ onSubmit, cycleInformation }: Props) => {
         voluptua. At vero eos et accusam et justo duo dolores et ea rebum.{" "}
       </p>
 
-      <Formik initialValues={initialValues} onSubmit={onFormSubmit}>
-        <Form>
-          <label>
-            Beginn deiner Periode
-            <Field id="periodStart" name="periodStart" type="date" />
-          </label>
-          <label>
-            Dauer deiner Menstruation
-            <Field
-              id="menstruationLength"
-              name="menstruationLength"
-              type="number"
-              min="1"
-            />
-          </label>
-          <label>
-            Dauer deines Zyklus
-            <Field id="cycleLength" name="cycleLength" type="number" min="1" />
-          </label>
-          <label>Deine Sporttage</label>
-          <CheckboxWrapper role="group">
-            {[0, 1, 2, 3, 4, 5, 6].map((value) => (
-              <label key={value}>
-                <Field
-                  id={value.toString()}
-                  type="checkbox"
-                  name="sportDays"
-                  value={value.toString()}
-                  key={value}
-                />
-                {weekdayByIndex[value]}
-              </label>
-            ))}
-          </CheckboxWrapper>
-          <ApplyButton type="submit">Plan generieren</ApplyButton>
-        </Form>
-      </Formik>
+      <InputsForm cycleInformation={cycleInformation} onSubmit={onFormSubmit} />
     </Wrapper>
   );
 };

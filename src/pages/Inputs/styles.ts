@@ -17,3 +17,7 @@ export const ApplyButton = styled(Button)`
   width: 50%;
   margin: auto;
 `;
+
+export const Error = styled.small`
+  color: red;
+`;

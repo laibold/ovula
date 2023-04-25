@@ -4,10 +4,10 @@ import { GlobalStyle } from "./components/Theme/GlobalStyle";
 import "@picocss/pico";
 import styled from "styled-components";
 import { EventObject } from "@toast-ui/calendar/types";
-import { Inputs } from "./pages/Inputs";
 import { Route, Routes } from "react-router-dom";
 import { useState } from "react";
 import { CycleInformation } from "./types/types";
+import { Inputs } from "./pages/Inputs";
 
 const Headline = styled.h1`
   text-align: center;
