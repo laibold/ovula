@@ -1,6 +1,6 @@
-import { CycleInformation } from "../types/types";
 import { EventObject } from "@toast-ui/calendar";
 import { useMemo } from "react";
+import { CycleInformation } from "../../types/types";
 
 type Phase = {
   start: Date;
@@ -50,25 +50,28 @@ export const useEvents = ({
         menstruationPhase.duration,
         "#c95151"
       ),
+      ...getSportEventsForPhase(menstruationPhase, sportDays),
       createEvent(
         "Follikelphase",
         follicularPhase.start,
         follicularPhase.duration,
         "#dad859"
       ),
+      ...getSportEventsForPhase(follicularPhase, sportDays),
       createEvent(
         "Ovulation",
         ovaluationPhase.start,
         ovaluationPhase.duration,
         "#6fc951"
       ),
+      ...getSportEventsForPhase(ovaluationPhase, sportDays),
       createEvent(
         "Lutealphase",
         lutealPhase.start,
         lutealPhase.duration,
         "#be439a"
       ),
-      createEvent("Sport", new Date(), 0, "#ff6100"),
+      ...getSportEventsForPhase(lutealPhase, sportDays),
     ];
   }, [periodStart, menstruationLength, cycleLength, sportDays]);
 };
@@ -85,6 +88,20 @@ const getDateFromDuration = (startDate: Date, duration: number) => {
   return date;
 };
 
+const getSportEventsForPhase = (phase: Phase, sportDays: number[]) => {
+  const events: EventObject[] = [];
+
+  for (let i = 0; i < phase.duration; i++) {
+    const date = getDateFromDuration(phase.start, i);
+    if (sportDays.includes(date.getDay() - 1)) {
+      // todo get sport type
+      events.push(createEvent("Sport", date, 0, "#ff6100"));
+    }
+  }
+
+  return events;
+};
+
 const createEvent = (
   name: string,
   startDate: Date,
@@ -95,7 +112,7 @@ const createEvent = (
   category: "allday",
   isVisible: true,
   title: name,
-  id: name, // todo
+  id: `${name.replaceAll(" ", "")}-${startDate.getTime()}`,
   body: "Test",
   start: startDate,
   end: getDateFromDuration(startDate, duration),

@@ -7,7 +7,7 @@ import { Route, Routes } from "react-router-dom";
 import { useState } from "react";
 import { CycleInformation } from "./types/types";
 import { Inputs } from "./pages/Inputs";
-import { useEvents } from "./services/eventService";
+import { useEvents } from "./hooks/useEvents";
 
 const Headline = styled.h1`
   text-align: center;
@@ -19,7 +19,7 @@ const defaultCycleInformation: CycleInformation = {
   periodStart: new Date(),
   menstruationLength: 4,
   cycleLength: 28,
-  sportDays: [],
+  sportDays: [0, 2, 4],
 };
 
 export const App = () => {
