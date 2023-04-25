@@ -82,7 +82,7 @@ export const Calendar = ({ events }: Props) => {
         month={monthOptions}
         // isReadOnly={true}
         theme={themeConfig}
-        height="700px"
+        height="550px"
         events={events}
         timezone={timezoneOptions}
       />
